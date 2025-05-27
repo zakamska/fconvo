@@ -190,3 +190,15 @@ def flam_ave(wv, flam, wv_tran, tran, tflag=0, verbose=1):
         
     return(flamave)
 
+#*************************************************************************
+#*************************************************************************
+#*************************************************************************
+
+def lam_eff(lam,T): 
+    # for an input array of wavelengths and transmission (which is assumed to be quantum efficiency)
+    # calculate the effective wavelength using Fukugita's 1996 equation
+    _ind=np.arange(len(lam)-1, dtype=int)
+    _temp=T*np.log(lam)
+    _numer=np.sum(0.5*(_temp[_ind+1]+_temp[_ind])*(np.log(lam[_ind+1])-np.log(lam[_ind])))
+    _denom=np.sum(0.5*(T[_ind+1]+T[_ind])*(np.log(lam[_ind+1])-np.log(lam[_ind])))
+    return(np.exp(_numer/_denom))
